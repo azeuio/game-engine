@@ -7,17 +7,14 @@
 
 #include "core/DrawableController.hpp"
 
-namespace en
-{
+using namespace en;
 
 void DrawableController::draw(
     [[maybe_unused]]sf::RenderTarget& target,
     [[maybe_unused]]sf::RenderStates states) const
 {
     for (auto drawable : _drawables) {
-    // printf("\n");
-        drawable->draw(target, states);
+        drawable->draw(target, {});
     }
 }
 
-} // namespace en

@@ -12,19 +12,15 @@ int demo1_scene1(sf::RenderWindow& window)
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
     en::Square s = en::Square();
-    bool running = true;
     sf::Clock sceneClock = sf::Clock();
 
-    while (window.isOpen() && running)
+    while (window.isOpen() &&
+    sceneClock.getElapsedTime().asSeconds() < .5)
     {
         sf::Event event;
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed) { window.close(); }
-            if (event.type == sf::Event::KeyPressed &&
-            sceneClock.getElapsedTime().asSeconds() > 1) {
-                running = false;
-            }
         }
 
         s.update();

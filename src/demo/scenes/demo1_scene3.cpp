@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2022
 ** game-engine [WSL : Ubuntu]
 ** File description:
-** demo1_scene2
+** demo1_scene3
 */
 
 #include "core/DrawableController.hpp"
@@ -10,17 +10,24 @@
 
 using namespace en;
 
-int demo1_scene2(sf::RenderWindow& window)
+int demo1_scene3(sf::RenderWindow& window)
 {
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
-    Square s = Square(sf::Color::Green);
+    Square s1 = Square(sf::Color::Red);
+    Square s2 = Square(sf::Color::Green);
+    Square s3 = Square(sf::Color::Blue);
     DrawableController dc;
     sf::Clock sceneClock = sf::Clock();
+    bool running = true;
 
-    dc.add(&s);
-    while (window.isOpen() &&
-    sceneClock.getElapsedTime().asSeconds() < .5)
+    dc.add(&s1);
+    dc.add(&s2);
+    dc.add(&s3);
+    s2.move(sf::Vector2f(0, 50));
+    s3.move({s3.getRect().getSize().x, 50 * 2});
+    while (window.isOpen() && running &&
+    sceneClock.getElapsedTime().asSeconds() < 2)
     {
         sf::Event event;
         while (window.pollEvent(event))
@@ -28,7 +35,9 @@ int demo1_scene2(sf::RenderWindow& window)
             if (event.type == sf::Event::Closed) { window.close(); }
         }
 
-        s.update();
+        s1.update();
+        s2.update();
+        s3.update();
         window.clear();
         window.draw(dc, {});
         window.display();
