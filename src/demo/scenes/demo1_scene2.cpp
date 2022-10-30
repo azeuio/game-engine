@@ -12,8 +12,6 @@ using namespace en;
 
 int demo1_scene2(sf::RenderWindow& window)
 {
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
     Square s = Square(sf::Color::Green);
     DrawableController dc;
     sf::Clock sceneClock = sf::Clock();

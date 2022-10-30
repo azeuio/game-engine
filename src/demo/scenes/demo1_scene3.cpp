@@ -12,8 +12,6 @@ using namespace en;
 
 int demo1_scene3(sf::RenderWindow& window)
 {
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
     Square s1 = Square(sf::Color::Red);
     Square s2 = Square(sf::Color::Green);
     Square s3 = Square(sf::Color::Blue);

@@ -9,8 +9,6 @@
 
 int demo1_scene1(sf::RenderWindow& window)
 {
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
     en::Square s = en::Square();
     sf::Clock sceneClock = sf::Clock();
 
