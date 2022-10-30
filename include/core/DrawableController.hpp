@@ -27,7 +27,10 @@ friend class Drawable;
         _drawables.push_back(drawable);
     }
 
-    const std::vector<const Drawable *>& getDrawable(void) const { return _drawables; };
+    const std::vector<const Drawable *>& getDrawable(void) const
+    {
+        return _drawables;
+    }
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 

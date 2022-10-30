@@ -23,6 +23,7 @@ int demo1(void)
     if (demo1_scene1(window)) { return 1; }
     if (demo1_scene2(window)) { return 1; }
     if (demo1_scene3(window)) { return 1; }
+    if (demo1_scene4(window)) { return 1; }
     printf("\n");
     return 0;
 }
