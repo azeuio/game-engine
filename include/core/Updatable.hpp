@@ -13,6 +13,7 @@ class Updatable {
 private:
     sf::Time _dt;
     sf::Time _lastCall;
+    sf::Clock _clock;
 public:
     virtual ~Updatable() = default;
 
@@ -20,8 +21,7 @@ public:
 
     void update()
     {
-        static sf::Clock clock;
-        sf::Time now = clock.getElapsedTime();
+        sf::Time now = _clock.getElapsedTime();
 
         _dt = now - _lastCall;
         _lastCall = now;
