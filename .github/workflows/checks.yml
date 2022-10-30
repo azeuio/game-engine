@@ -1,0 +1,99 @@
+name: checks
+
+on:
+  push:
+    branches-ignore:
+      - 'ga-ignore-**'
+  pull_request:
+      branches-ignore:
+      - 'ga-ignore-**'
+
+env:
+  MIRROR_URL: "git@github.com:azeuio/game-engine.git"
+  EXECUTABLES: "a.out"
+  UNWANTED_REGEX: (^(.*tmp/)|(~|.*\.[oa]|.*.so|.*.gcno|.*.gcda|.*.gcov)$)
+
+jobs:
+  check_repository_cleanliness:
+    runs-on: ubuntu-latest
+    name: Checks if the repository is clean and void of any unwanted files (temp files, binary files, etc.)
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: check repo files
+        run: |
+          FOUND=$(find . -regextype posix-extended -regex $UNWANTED_REGEX -printf '%P\n')
+          FOUND+=$(find -iname "**pain_au_chocolat**" -printf '%P\n')
+          
+          if [[ $(wc -w <<< "$FOUND") != 0 ]]; then
+            for i in $FOUND;
+            do
+              echo "::error file=$i,line=1,title=Unwanted file detected::$i"
+            done
+            exit 1
+          else
+            echo "no unwanted files were detected !"
+          fi
+        env:
+          UNWANTED_REGEX: ${{ env.UNWANTED_REGEX }}
+
+  check_program_compilation:
+    needs: check_repository_cleanliness
+    runs-on: ubuntu-latest
+    name: Checks program compilation
+    container:
+      image: epitechcontent/epitest-docker
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: make
+        timeout-minutes: 2
+      - run: make clean
+      - name: check executables
+        run: |
+          for i in $EXECUTABLES;
+            do
+              FOUND+=$(find $i -perm -a=x)
+              FOUND+=" "
+            done
+          if [[ $(wc -w <<< $FOUND) < $(wc -w <<< $EXECUTABLES) ]]; then
+            exit 1
+          else
+            for j in $FOUND;
+              do
+                echo "$j was found and can be executed !"
+              done
+          fi
+        env:
+          EXECUTABLES: ${{ env.EXECUTABLES }}
+
+  run_tests:
+    needs: check_program_compilation
+    runs-on: ubuntu-latest
+    name: Run tests
+    container:
+      image: epitechcontent/epitest-docker
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: make tests_run
+        timeout-minutes: 2
+
+  push_to_mirror:
+    if: ${{ github.event.pull_request == false }}
+    needs: run_tests
+    runs-on: ubuntu-latest
+    name: Push to mirror repository
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url:
+            ${{ env.MIRROR_URL }}
+          ssh_private_key:
+            ${{ secrets.GIT_SSH_PRIVATE_KEY }}

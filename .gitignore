@@ -1,0 +1,54 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+demo
+
+# IDE files
+.vscode/
+.idea/
+
+# generated folders
+screenshots/
+obj/
+
+# gcov files
+*.gcov
+*.gcda
+*.gcno
+
+#test executables
+unit_tests
+
+# misc
+.directory
+docs
+assets/css
