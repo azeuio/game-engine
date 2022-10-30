@@ -9,6 +9,9 @@
 
 #include "SFML/System/Time.hpp"
 
+namespace en
+{
+
 class Updatable {
 private:
     sf::Time _dt;
@@ -29,3 +32,5 @@ public:
     }
     virtual void onUpdate(const sf::Time& dt) = 0;
 };
+
+} // namespace en

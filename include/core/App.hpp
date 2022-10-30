@@ -14,6 +14,9 @@
 #include "core/Drawable.hpp"
 #include "core/Updatable.hpp"
 
+namespace en
+{
+
 class App : public Updatable, public Drawable {
 private:
     std::vector<Updatable> _updatables;
@@ -21,3 +24,5 @@ private:
 public:
     App(uint32_t width = 0, uint32_t height = 0);
 };
+
+} // namespace en

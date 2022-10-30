@@ -7,6 +7,12 @@
 
 #pragma once
 
+namespace en
+{
+
+/**
+ * @brief Class to inherit in order to have a unique identifier
+ */
 class Identifiable {
 private:
     unsigned long _id = -1UL;
@@ -18,5 +24,8 @@ public:
         gid++;
     }
 
+    /// Get unique identifier
     unsigned long getId(void) const { return _id; }
 };
+
+} // namespace en
