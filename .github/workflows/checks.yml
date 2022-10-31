@@ -1,6 +1,10 @@
 name: checks
 
 on:
+  workflow_call:
+    secrets:
+      GIT_SSH_PRIVATE_KEY:
+        required: true
   push:
     branches-ignore:
       - 'ga-ignore-**'
