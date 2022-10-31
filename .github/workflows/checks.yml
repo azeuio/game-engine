@@ -50,9 +50,9 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - run: make
+      - run: make -j $(nproc)
         timeout-minutes: 2
-      - run: make clean
+      - run: make -j $(nproc) clean
       - name: check executables
         run: |
           for i in $EXECUTABLES;
@@ -81,7 +81,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - run: make tests_run
+      - run: make -j $(nproc) tests_run
         timeout-minutes: 2
 
   push_to_mirror:
