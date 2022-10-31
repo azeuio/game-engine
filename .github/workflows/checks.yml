@@ -15,7 +15,7 @@ env:
 
 jobs:
   check_repository_cleanliness:
-    if: ${{ github.repository }} == "game-engine-v2"
+    if: github.repository == 'azeuio/game-engine-v2'
     runs-on: ubuntu-latest
     name: Checks if the repository is clean and void of any unwanted files (temp files, binary files, etc.)
     steps:
@@ -24,6 +24,7 @@ jobs:
           fetch-depth: 0
       - name: check repo files
         run: |
+          echo ${{ github.repository }}
           FOUND=$(find . -regextype posix-extended -regex $UNWANTED_REGEX -printf '%P\n')
           FOUND+=$(find -iname "**pain_au_chocolat**" -printf '%P\n')
           

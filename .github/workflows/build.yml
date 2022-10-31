@@ -9,9 +9,11 @@ on:
 
 jobs:
   build:
-    if: ${{ github.repository }} == "game-engine"
+    if: github.repository == 'azeuio/game-engine'
     name: Build and analyze
     runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker
     env:
       SONAR_SCANNER_VERSION: 4.7.0.2747
       SONAR_SERVER_URL: "https://sonarcloud.io"
