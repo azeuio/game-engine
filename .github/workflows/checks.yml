@@ -1,10 +1,6 @@
 name: checks
 
 on:
-  workflow_call:
-    secrets:
-      GIT_SSH_PRIVATE_KEY:
-        required: true
   push:
     branches-ignore:
       - 'ga-ignore-**'
@@ -19,6 +15,7 @@ env:
 
 jobs:
   check_repository_cleanliness:
+    if: ${{ github.repository }} == "game-engine-v2"
     runs-on: ubuntu-latest
     name: Checks if the repository is clean and void of any unwanted files (temp files, binary files, etc.)
     steps:

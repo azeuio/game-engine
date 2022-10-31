@@ -1,17 +1,15 @@
 name: SonarCloud
 on:
-  workflow_call:
-    secrets:
-      SONAR_TOKEN:
-        required: true
   push:
     branches:
-      - main
+      - master
       - dev
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
   build:
+    if: ${{ github.repository }} == "game-engine"
     name: Build and analyze
     runs-on: ubuntu-latest
     env:
