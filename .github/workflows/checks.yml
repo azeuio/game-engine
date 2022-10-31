@@ -10,7 +10,7 @@ on:
 
 env:
   MIRROR_URL: "git@github.com:azeuio/game-engine.git"
-  EXECUTABLES: "a.out"
+  EXECUTABLES: "demo"
   UNWANTED_REGEX: (^(.*tmp/)|(~|.*\.[oa]|.*.so|.*.gcno|.*.gcda|.*.gcov)$)
 
 jobs:
