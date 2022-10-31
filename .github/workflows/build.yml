@@ -1,20 +1,23 @@
-name: Build
+name: SonarCloud
 on:
+  workflow_call:
+    secrets:
+      SONAR_TOKEN:
+        required: true
   push:
-    branches-ignore:
-      - 'ga-ignore-**'
+    branches:
+      - main
+      - dev
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
   build:
-    name: Build
+    name: Build and analyze
     runs-on: ubuntu-latest
     env:
       SONAR_SCANNER_VERSION: 4.7.0.2747
       SONAR_SERVER_URL: "https://sonarcloud.io"
       BUILD_WRAPPER_OUT_DIR: build_wrapper_output_directory # Directory where build-wrapper output will be placed
-    container:
-      image: epitechcontent/epitest-docker
     steps:
       - uses: actions/checkout@v2
         with:
@@ -41,19 +44,9 @@ jobs:
       - name: Run build-wrapper
         run: |
           build-wrapper-linux-x86-64 --out-dir ${{ env.BUILD_WRAPPER_OUT_DIR }} make re
-      - name: Run Tests to generate coverage statistics
-        run: |
-          make tests_run
-      - name: Collect coverage into one XML report
-        run: |
-          gcovr --sonarqube > coverage.xml
       - name: Run sonar-scanner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          sonar-scanner \
-          --define sonar.host.url="${{ env.SONAR_SERVER_URL }}" \
-          --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}" \
-          --define sonar.coverageReportPaths=coverage.xml \
-          --define sonar.cfamily.gcov.reportsPath="."
+          sonar-scanner --define sonar.host.url="${{ env.SONAR_SERVER_URL }}" --define sonar.cfamily.build-wrapper-output="${{ env.BUILD_WRAPPER_OUT_DIR }}"
