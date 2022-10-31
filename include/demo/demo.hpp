@@ -18,6 +18,8 @@ int demo1_scene1(sf::RenderWindow& window);
 int demo1_scene2(sf::RenderWindow& window);
 int demo1_scene3(sf::RenderWindow& window);
 int demo1_scene4(sf::RenderWindow& window);
+int demo1_scene5(void);
+
 
 const std::array<demoFcnt_t, 1> DEMOS = {
     demo1
