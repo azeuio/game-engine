@@ -40,7 +40,10 @@ PROGRAM_NAME	?=	$(PROGRAM_NAME:.exe=.out)
 
 all: $(DEPENDENCIES) $(PROGRAM_NAME)
 
-run: all execute
+run: MAKEFLAGS += --silent
+run:
+	@$(MAKE) all
+	@$(MAKE) execute
 
 execute:
 	@echo "\033[1;32mRunning $(PROGRAM_NAME)...\033[0m"
