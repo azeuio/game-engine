@@ -72,7 +72,7 @@ jobs:
           EXECUTABLES: ${{ env.EXECUTABLES }}
 
   run_tests:
-    needs: check_program_compilation
+    needs: check_repository_cleanliness
     runs-on: ubuntu-latest
     name: Run tests
     container:
@@ -86,7 +86,7 @@ jobs:
 
   push_to_mirror:
     if: ${{ github.event.pull_request == false }}
-    needs: run_tests
+    needs: [check_program_compilation,run_tests]
     runs-on: ubuntu-latest
     name: Push to mirror repository
     steps:
