@@ -17,6 +17,8 @@ private:
     sf::Time _dt;
     sf::Time _lastCall;
     sf::Clock _clock;
+protected:
+    void reset(void) { _lastCall = _clock.getElapsedTime(); }
 public:
     virtual ~Updatable() = default;
 
