@@ -13,10 +13,10 @@ using namespace en;
 
 int demo2_scene1(en::App& app)
 {
-    Square s1 = Square(sf::Color::Red);
-    Square s2 = Square(sf::Color::Green);
-    Square s3 = Square(sf::Color::Blue);
-    sf::Clock sceneClock = sf::Clock();
+    auto s1 = Square(sf::Color::Red);
+    auto s2 = Square(sf::Color::Green);
+    auto s3 = Square(sf::Color::Blue);
+    sf::Clock sceneClock;
     bool running = true;
     sf::RenderWindow& window = app.getWindow();
 

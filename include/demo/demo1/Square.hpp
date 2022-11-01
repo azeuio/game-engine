@@ -31,7 +31,7 @@ public:
 
     using Updatable::update;
     using sf::Transformable::move;
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override
     {
         sf::RectangleShape r = _rect;
         r.setPosition(this->getPosition());

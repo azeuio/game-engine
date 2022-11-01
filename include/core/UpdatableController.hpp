@@ -32,8 +32,7 @@ friend class Updatable;
         return _updatables;
     }
 
-    using Updatable::onUpdate;
-    void onUpdate(const sf::Time& dt);
+    void onUpdate(const sf::Time& dt) override;
 };
 
 } // namespace en

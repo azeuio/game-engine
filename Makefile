@@ -29,7 +29,7 @@ OBJ	:=	$(patsubst src/%$(EXTENSION), obj/%.o, $(SRC))
 TEST_OBJ	:=	$(patsubst src/%$(EXTENSION), obj/%.o, $(SRC_NO_MAIN)) \
 				$(patsubst tests/%$(EXTENSION), obj/tests/%.o, $(TEST_SRC))
 
-CFLAGS	?=	-std=c++2a -Wall -Wextra -Wshadow -Wpedantic -Iinclude -O3\
+CFLAGS	?=	-std=c++17 -Wall -Wextra -Wshadow -Wpedantic -Iinclude -O3\
 			$(TEST_CFLAGS) -DLINUX
 
 LDFLAGS	?=	-lsfml-graphics -lsfml-window -lsfml-system $(TEST_LDFLAGS)

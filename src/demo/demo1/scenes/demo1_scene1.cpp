@@ -9,8 +9,8 @@
 
 int demo1_scene1(sf::RenderWindow& window)
 {
-    en::Square s = en::Square();
-    sf::Clock sceneClock = sf::Clock();
+    en::Square s;
+    sf::Clock sceneClock;
 
     while (window.isOpen() &&
     sceneClock.getElapsedTime().asSeconds() < .5)

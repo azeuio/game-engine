@@ -12,11 +12,11 @@ using namespace en;
 
 int demo1_scene3(sf::RenderWindow& window)
 {
-    Square s1 = Square(sf::Color::Red);
-    Square s2 = Square(sf::Color::Green);
-    Square s3 = Square(sf::Color::Blue);
+    auto s1 = Square(sf::Color::Red);
+    auto s2 = Square(sf::Color::Green);
+    auto s3 = Square(sf::Color::Blue);
     DrawableController dc;
-    sf::Clock sceneClock = sf::Clock();
+    sf::Clock sceneClock;
     bool running = true;
 
     dc.add(&s1);

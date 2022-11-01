@@ -12,9 +12,9 @@ using namespace en;
 
 int demo1_scene2(sf::RenderWindow& window)
 {
-    Square s = Square(sf::Color::Green);
+    auto s = Square(sf::Color::Green);
     DrawableController dc;
-    sf::Clock sceneClock = sf::Clock();
+    sf::Clock sceneClock;
 
     dc.add(&s);
     while (window.isOpen() &&

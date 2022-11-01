@@ -31,7 +31,8 @@ friend class Drawable;
     {
         return _drawables;
     }
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    void draw(sf::RenderTarget& target, sf::RenderStates states)
+    const override;
 };
 
 } // namespace en
