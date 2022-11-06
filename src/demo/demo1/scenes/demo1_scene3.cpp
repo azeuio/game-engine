@@ -23,7 +23,7 @@ int demo1_scene3(sf::RenderWindow& window)
     dc.add(&s2);
     dc.add(&s3);
     s2.move(sf::Vector2f(0, 50));
-    s3.move({s3.getRect().getSize().x, 50 * 2});
+    s3.move({50, 50 * 2});
     while (window.isOpen() && running &&
     sceneClock.getElapsedTime().asSeconds() < .5)
     {

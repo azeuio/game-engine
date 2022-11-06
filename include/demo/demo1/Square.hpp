@@ -27,8 +27,6 @@ public:
     }
     ~Square(void) final = default;
 
-    sf::RectangleShape& getRect(void) { return _rect; }
-
     using Updatable::update;
     using sf::Transformable::move;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override
