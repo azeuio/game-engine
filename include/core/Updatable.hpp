@@ -18,10 +18,14 @@ private:
     sf::Time _lastCall;
     sf::Clock _clock;
 protected:
-    void reset(void) { _lastCall = _clock.getElapsedTime(); }
+    /**
+     * @brief Restarts the clock and sets dt to zero
+     */
+    void rewind(void);
 public:
     virtual ~Updatable() = default;
 
+    const sf::Clock &getClock(void) const { return _clock; }
     const sf::Time& getDt(void) const { return _dt; }
 
     void update(void);

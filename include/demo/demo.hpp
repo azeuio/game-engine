@@ -24,6 +24,7 @@ int demo1_scene5(void);
 
 int demo2(void);
 int demo2_scene1(en::App& app);
+int demo2_scene2(en::App& app);
 
 const std::array<demoFcnt_t, 2> DEMOS = {
     demo1,

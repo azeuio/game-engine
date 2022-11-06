@@ -32,6 +32,9 @@ friend class Updatable;
         return _updatables;
     }
 
+    void clear(void) { _updatables.clear(); }
+
+    using Updatable::onUpdate;
     void onUpdate(const sf::Time& dt) override;
 };
 

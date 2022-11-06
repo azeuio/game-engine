@@ -2,14 +2,15 @@
 ** EPITECH PROJECT, 2022
 ** game-engine [WSL : Ubuntu]
 ** File description:
-** init
+** reset
 */
 
 #include "core/App.hpp"
 
 using namespace en;
 
-void App::init(void)
+void App::reset(void)
 {
-    this->Updatable::reset();
+    _drawableController.clear();
+    _updatableController.clear();
 }

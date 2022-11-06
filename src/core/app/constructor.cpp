@@ -23,4 +23,8 @@ App::App(const std::string& title, uint32_t width, uint32_t height)
         (int)(desktopSize.x - _window.getSize().x) / 2,
         (int)(desktopSize.y - _window.getSize().y) / 2});
     _window.setFramerateLimit(60);
+
+    // TODO: create Window class
+    _display.create(
+        _window.getSize().x, _window.getSize().y, _window.getSettings());
 }

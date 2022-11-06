@@ -31,6 +31,7 @@ friend class Drawable;
     {
         return _drawables;
     }
+    void clear(void) { _drawables.clear(); }
     void draw(sf::RenderTarget& target, sf::RenderStates states)
     const override;
 };

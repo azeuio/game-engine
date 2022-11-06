@@ -28,17 +28,21 @@ public:
     ~Square(void) final = default;
 
     using Updatable::update;
-    using sf::Transformable::move;
+
+    void setSize(const sf::Vector2f& size) { _rect.setSize(size); }
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override
     {
-        sf::RectangleShape r = _rect;
-        r.setPosition(this->getPosition());
-        r.setPosition(r.getPosition().x, r.getPosition().y);
-        target.draw(r, states);
+        states.transform *= this->getTransform();
+        target.draw(_rect, states);
     }
 
     void onUpdate(const sf::Time& dt) override {
+        float x = this->getPosition().x;
         this->move({dt.asSeconds() * 50, 0});
+        printf("dt: %f | %f x: %.2F; x: %.2F%c",
+        dt.asSeconds(), dt.asSeconds() * 50, x,
+        this->getPosition().x, 13);
+        fflush(stdout);
     }
 };
 

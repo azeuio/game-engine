@@ -9,6 +9,11 @@
 
 using namespace en;
 
+void App::draw(void)
+{
+    _display.draw(_drawableController);
+}
+
 void App::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     _drawableController.draw(target, states);
