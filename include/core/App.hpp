@@ -11,6 +11,7 @@
 
 #include "SFML/Graphics.hpp"
 
+#include "core/Window.hpp"
 #include "core/DrawableController.hpp"
 #include "core/UpdatableController.hpp"
 
@@ -21,11 +22,13 @@ class App : public Updatable, public Drawable {
 private:
     DrawableController _drawableController;
     UpdatableController _updatableController;
-    sf::RenderWindow _window;
+    sf::RenderWindow _window2;
     sf::RenderTexture _display;
+    Window *_window = nullptr;
 public:
-    App(const std::string& title = "App",
-    uint32_t width = 400, uint32_t height = 400);
+    App(std::string_view title = "App",
+    uint32_t width = 0, uint32_t height = 0);
+    ~App(void);
 
     DrawableController &getDrawableController(void)
     {
@@ -35,7 +38,7 @@ public:
     {
         return _updatableController;
     }
-    sf::RenderWindow &getWindow(void) { return _window; }
+    Window &getWindow(void) { return *_window; }
 
     using Updatable::rewind;
 

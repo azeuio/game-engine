@@ -11,7 +11,7 @@ using namespace en;
 
 void App::clear(const sf::Color& color)
 {
-    _display.clear(color);
+    _window->clear(color);
 }
 
 void App::clear(const sf::Texture *texture)

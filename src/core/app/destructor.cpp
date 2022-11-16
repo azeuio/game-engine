@@ -2,14 +2,16 @@
 ** EPITECH PROJECT, 2022
 ** game-engine [WSL : Ubuntu]
 ** File description:
-** display
+** destructor
 */
 
 #include "core/App.hpp"
 
 using namespace en;
 
-void App::display(void)
+App::~App(void)
 {
-    _window->display();
+    if (_window != nullptr) {
+        delete _window;
+    }
 }

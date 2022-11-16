@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2022
 ** game-engine [WSL : Ubuntu]
 ** File description:
-** demo2_scene2
+** demo2_scene3
 */
 
 #include "core/App.hpp"
@@ -11,17 +11,16 @@
 
 using namespace en;
 
-int demo2_scene2(en::App& app)
+int demo2_scene3(en::App& app)
 {
     auto s1 = Square(sf::Color::Red);
     auto s2 = Square(sf::Color::Green);
     auto s3 = Square(sf::Color::Blue);
     sf::Clock sceneClock;
-    sf::RenderWindow& window = app.getWindow();
+    en::Window& window = app.getWindow();
 
     app.reset();
-    for (auto &&square : {&s1, &s2, &s3})
-    {
+    for (auto &&square : {&s1, &s2, &s3}) {
         app.addDrawable(square);
         app.addUpdatable(square);
     }
@@ -37,7 +36,7 @@ int demo2_scene2(en::App& app)
     while (window.isOpen() &&
     (app.getClock().getElapsedTime() - t).asSeconds() <= 2)
     {
-        while (window.pollEvent(event))
+        while (window.getWindow().pollEvent(event))
         {
             if (event.type == sf::Event::Closed) { window.close(); }
         }
