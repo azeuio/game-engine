@@ -17,7 +17,7 @@ int demo2_scene3(en::App& app)
     auto s2 = Square(sf::Color::Green);
     auto s3 = Square(sf::Color::Blue);
     sf::Clock sceneClock;
-    en::Window& window = app.getWindow();
+    // en::Window *window = app.getWindow();
 
     app.reset();
     for (auto &&square : {&s1, &s2, &s3}) {
@@ -33,12 +33,12 @@ int demo2_scene3(en::App& app)
     app.rewind();
     sf::Time t = app.getClock().getElapsedTime();
     sf::Event event;
-    while (window.isOpen() &&
+    while (app.isOpen() &&
     (app.getClock().getElapsedTime() - t).asSeconds() <= 2)
     {
-        while (window.getWindow().pollEvent(event))
+        while (app.getWindow().pollEvent(event))
         {
-            if (event.type == sf::Event::Closed) { window.close(); }
+            if (event.type == sf::Event::Closed) { app.close(); }
         }
 
         app.update();

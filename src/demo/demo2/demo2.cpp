@@ -13,8 +13,8 @@
 int demo2(void)
 {
     en::App app("Demo2");
-    en::Window &window = app.getWindow();
-    window.setTitle("3");
+    // en::Window *window = app.getWindow();
+    // window->setTitle("3");
     if (demo2_scene3(app)) { return 1; }
     printf("\n");
     return 0;

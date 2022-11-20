@@ -23,7 +23,7 @@ private:
     DrawableController _drawableController;
     UpdatableController _updatableController;
     sf::RenderTexture _display;
-    std::unique_ptr<Window> _window = nullptr;
+    std::unique_ptr<Window> _window;
 public:
     App(std::string_view title = "App",
     uint32_t width = 0, uint32_t height = 0);
@@ -36,7 +36,9 @@ public:
     {
         return _updatableController;
     }
-    Window &getWindow(void) { return *_window; }
+    sf::RenderWindow &getWindow(void) { return _window.get()->getWindow(); }
+    bool isOpen(void) const { return _window.get()->isOpen(); }
+    void close(void) { _window.get()->close(); }
 
     using Updatable::rewind;
 
