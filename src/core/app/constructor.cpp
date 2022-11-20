@@ -11,5 +11,5 @@ using namespace en;
 
 App::App(std::string_view title, uint32_t width, uint32_t height)
 {
-    _window.reset(new Window(title, {width, height}));
+    _window = std::make_unique<Window>(title, sf::Vector2u(width, height));
 }

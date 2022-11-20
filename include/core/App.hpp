@@ -23,7 +23,7 @@ private:
     DrawableController _drawableController;
     UpdatableController _updatableController;
     sf::RenderTexture _display;
-    std::unique_ptr<Window> _window;
+    std::unique_ptr<Window> _window = nullptr;
 public:
     App(std::string_view title = "App",
     uint32_t width = 0, uint32_t height = 0);
