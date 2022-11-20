@@ -13,13 +13,19 @@ using namespace en;
 
 int demo2_scene3(en::App& app)
 {
-    auto s1 = Square(sf::Color::Red);
-    auto s2 = Square(sf::Color::Green);
-    auto s3 = Square(sf::Color::Blue);
+    Square s1(sf::Color::Red);
+    Square s2(sf::Color::Green);
+    Square s3(sf::Color::Blue);
+    Square center(sf::Color::White);
     sf::Clock sceneClock;
     en::Window *window = app.getWindow();
 
+    center.setPosition(window->getSFWindow().getView().getCenter());
+    center.setOrigin({Square::SIZE / 2, Square::SIZE / 2});
+    center.setIsStatic(true);
     app.reset();
+    app.addDrawable(&center);
+    app.addUpdatable(&center);
     for (auto &&square : {&s1, &s2, &s3}) {
         app.addDrawable(square);
         app.addUpdatable(square);
@@ -33,8 +39,7 @@ int demo2_scene3(en::App& app)
     app.rewind();
     sf::Time t = app.getClock().getElapsedTime();
     sf::Event event;
-    while (window->isOpen() &&
-    (app.getClock().getElapsedTime() - t).asSeconds() <= 2)
+    while (window->isOpen())
     {
         while (window->getSFWindow().pollEvent(event))
         {
