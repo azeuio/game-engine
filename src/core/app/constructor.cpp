@@ -11,5 +11,5 @@ using namespace en;
 
 App::App(std::string_view title, uint32_t width, uint32_t height)
 {
-    _window = new Window(title, {width, height});
+    _window.reset(new Window(title, {width, height}));
 }
