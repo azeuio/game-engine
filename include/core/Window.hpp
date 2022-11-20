@@ -30,7 +30,7 @@ public:
         sf::Vector2u size = sf::Vector2u(0, 0)
     );
 
-    sf::RenderWindow &getWindow(void) { return _window; }
+    sf::RenderWindow &getSFWindow(void) { return _window; }
     bool isOpen(void) const { return _window.isOpen(); }
     void setTitle(const std::string &title);
     const std::string_view &getTitle(void) const { return _title; }

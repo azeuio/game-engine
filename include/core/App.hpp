@@ -37,9 +37,7 @@ public:
     {
         return _updatableController;
     }
-    sf::RenderWindow &getWindow(void) { return _window.get()->getWindow(); }
-    bool isOpen(void) const { return _window.get()->isOpen(); }
-    void close(void) { _window.get()->close(); }
+    Window *getWindow(void) { return _window.get(); }
 
     using Updatable::rewind;
 
