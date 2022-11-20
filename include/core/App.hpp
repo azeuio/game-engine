@@ -22,7 +22,6 @@ class App : public Updatable, public Drawable {
 private:
     DrawableController _drawableController;
     UpdatableController _updatableController;
-    sf::RenderWindow _window2;
     sf::RenderTexture _display;
     Window *_window = nullptr;
 public:

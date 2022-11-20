@@ -29,7 +29,6 @@ public:
         std::string_view title,
         sf::Vector2u size = sf::Vector2u(0, 0)
     );
-    ~Window(void);
 
     sf::RenderWindow &getWindow(void) { return _window; }
     bool isOpen(void) const { return _window.isOpen(); }
