@@ -19,13 +19,7 @@ namespace en
  */
 class Drawable : public sf::Drawable, public Identifiable {
 public:
-    /// Function inherited from sf::Drawable made public
-    void draw(
-        [[maybe_unused]]sf::RenderTarget& target,
-        [[maybe_unused]]sf::RenderStates states) const override
-        {
-            // only re-defined to make it public
-        };
+    using sf::Drawable::draw;
 };
 
 } // namespace en

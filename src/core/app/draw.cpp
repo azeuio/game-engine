@@ -9,12 +9,12 @@
 
 using namespace en;
 
-void App::draw(void)
+void App::draw(void) const
 {
-    _display.draw(_drawableController);
+    this->_window->draw(this->_drawableController);
 }
 
 void App::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    _drawableController.draw(target, states);
+    this->_drawableController.draw(target, states);
 }

@@ -35,7 +35,7 @@ CFLAGS	?=	-std=c++17 -Wall -Wextra -Wshadow -Wpedantic -Iinclude -O3\
 LDFLAGS	?=	-lsfml-graphics -lsfml-window -lsfml-system $(TEST_LDFLAGS)
 
 DEPENDENCIES	:=	dependencies.d
-ECHO	:=	echo
+ECHO	:=	printf
 PROGRAM_NAME	?=	$(PROGRAM_NAME:.exe=.out)
 
 all: $(DEPENDENCIES) $(PROGRAM_NAME)
@@ -46,39 +46,39 @@ run:
 	@$(MAKE) execute
 
 execute:
-	@echo "\033[1;32mRunning $(PROGRAM_NAME)...\033[0m"
+	@$(ECHO) "\033[1;32mRunning $(PROGRAM_NAME)...\033[0m\n"
 	@./$(PROGRAM_NAME)
 
 $(DEPENDENCIES): $(SRC)
-	@$(ECHO) "\033[1;32mGenerating dependencies...\033[0m"
+	@$(ECHO) "\033[1;32mGenerating dependencies...\033[0m\n"
 	@$(RM) $@
 	@$(CC) $(CFLAGS) -MT"$(patsubst src/%$(EXTENSION), obj/%.o, $<)" \
 	-MM $^ >> $@;
 
 include $(DEPENDENCIES)
 obj/%.o: src/%$(EXTENSION)
-	@$(ECHO) "\033[34mCompiling $<\033[0m"
+	@$(ECHO) "\033[34mCompiling $<\033[0m\n"
 	@mkdir -p $$($(ECHO) $(@D) | sed 's/src/obj/g')
 	@$(CC) -c $< -o $@ $(CFLAGS)
 
 $(PROGRAM_NAME): $(DEPENDENCIES) $(OBJ)
-	@$(ECHO) "\033[1;36mLinking $@\033[0m"
+	@$(ECHO) "\033[1;36mLinking $@\033[0m\n"
 	@$(CC) $(shell find obj -name *.o) -o $(PROGRAM_NAME) $(LDFLAGS) $(CFLAGS)
 
 clean:
-	@$(ECHO) "\033[1;31mCleaning objects...\033[0m"
+	@$(ECHO) "\033[1;31mCleaning objects...\033[0m\n"
 	@$(RM) -r obj
-	@$(ECHO) "\033[1;31mCleaning dependencies...\033[0m"
+	@$(ECHO) "\033[1;31mCleaning dependencies...\033[0m\n"
 	@$(RM) $(DEPENDENCIES)
 
 clean_gcovr:
-	@$(ECHO) "\033[1;31mCleaning gcovr...\033[0m"
+	@$(ECHO) "\033[1;31mCleaning gcovr...\033[0m\n"
 	@$(RM) *.gcda
 	@$(RM) *.gcno
 	@$(RM) *.gcov
 
 fclean: clean clean_gcovr
-	@$(ECHO) "\033[1;31mCleaning executable...\033[0m"
+	@$(ECHO) "\033[1;31mCleaning executable...\033[0m\n"
 	@$(RM) $(PROGRAM_NAME)
 
 re: fclean
@@ -104,7 +104,7 @@ endif
 tests_build:
 	@$(MAKE) fclean
 	@$(MAKE) $(TEST_OBJ)
-	@echo "\033[1;36mLinking tests...\033[0m"
+	@$(ECHO) "\033[1;36mLinking tests...\033[0m\n"
 	@$(CC) $(TEST_OBJ) \
 	-o $(PROGRAM_NAME) $(CFLAGS) $(TEST_CFLAGS) $(LDFLAGS)
 

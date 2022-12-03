@@ -9,12 +9,7 @@
 
 using namespace en;
 
-void App::display(void)
+void App::display(void) const
 {
-    sf::Sprite s;
-
-    _display.display();
-    s.setTexture(_display.getTexture(), true);
-    _window.draw(s);
-    _window.display();
+    this->_window->display();
 }

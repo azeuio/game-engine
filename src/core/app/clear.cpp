@@ -9,18 +9,18 @@
 
 using namespace en;
 
-void App::clear(const sf::Color& color)
+void App::clear(const sf::Color& color) const
 {
-    _display.clear(color);
+    this->_window->clear(color);
 }
 
 void App::clear(const sf::Texture *texture)
 {
     sf::Sprite s;
-    sf::View v = _display.getView();
+    sf::View v = this->_display.getView();
 
     s.setTexture(*texture, true);
-    _display.clear();
+    this->_display.clear();
     s.setPosition(v.getCenter() - v.getSize() / 2.f);
-    _display.draw(s);
+    this->_display.draw(s);
 }
