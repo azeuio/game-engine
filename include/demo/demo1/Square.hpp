@@ -18,7 +18,7 @@ namespace en
 class Square : public Drawable, public Updatable, public sf::Transformable {
 private:
     sf::RectangleShape _rect;
-    bool isStatic = false;
+    bool _isStatic = false;
 public:
     static const unsigned int SIZE = 50u;
 
@@ -33,8 +33,8 @@ public:
     using Updatable::update;
 
     void setSize(const sf::Vector2f& size) { _rect.setSize(size); }
-    void setIsStatic(const bool isStatic) { this->isStatic = isStatic; }
-    bool getIsStatic(void) const { return this->isStatic; }
+    void setIsStatic(const bool isStatic) { this->_isStatic = isStatic; }
+    bool getIsStatic(void) const { return this->_isStatic; }
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override
     {
@@ -43,7 +43,7 @@ public:
     }
 
     void onUpdate(const sf::Time& dt) override {
-        if (isStatic) { return; }
+        if (_isStatic) { return; }
         float x = this->getPosition().x;
         this->move({dt.asSeconds() * Square::SIZE, 0});
         printf("dt: %f | %f x: %.2F; x: %.2F%c",

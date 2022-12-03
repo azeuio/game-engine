@@ -50,6 +50,8 @@ public:
      * @brief Moves the window to go to the center of the screen
      */
     void centerOnScreen(void);
+
+    void updateView(const sf::Event &event);
 };
 
 } // namespace en

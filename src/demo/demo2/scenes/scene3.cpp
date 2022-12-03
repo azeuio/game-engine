@@ -37,13 +37,15 @@ int demo2_scene3(en::App& app)
     s2.setPosition(sf::Vector2f(0, 50));
     s3.setPosition({50, 50 * 2});
     app.rewind();
-    sf::Time t = app.getClock().getElapsedTime();
     sf::Event event;
     while (window->isOpen())
     {
         while (window->getSFWindow().pollEvent(event))
         {
             if (event.type == sf::Event::Closed) { window->close(); }
+            if (event.type == sf::Event::Resized) {
+                window->updateView(event);
+            }
         }
 
         app.update();
