@@ -55,7 +55,7 @@ public:
     /**
      * @brief Clears display with the given color
      */
-    void clear(const sf::Color &color = sf::Color::Black);
+    void clear(const sf::Color &color = sf::Color::Black) const;
     /**
      * @brief Clears display with the given texture
      */
@@ -64,12 +64,12 @@ public:
     /**
      * @brief Displays what's on the display buffer onto the window
      */
-    void display(void);
+    void display(void) const;
 
     /**
      * @brief Draws every Drawable in _drawableController
      */
-    void draw(void);
+    void draw(void) const;
     void draw(sf::RenderTarget& target, sf::RenderStates states)
     const override;
 };

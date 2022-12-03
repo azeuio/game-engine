@@ -9,7 +9,7 @@
 
 using namespace en;
 
-void App::draw(void)
+void App::draw(void) const
 {
     this->_window->draw(this->_drawableController);
 }

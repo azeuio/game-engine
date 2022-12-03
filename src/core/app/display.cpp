@@ -9,7 +9,7 @@
 
 using namespace en;
 
-void App::display(void)
+void App::display(void) const
 {
     this->_window->display();
 }

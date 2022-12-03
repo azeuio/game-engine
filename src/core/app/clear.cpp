@@ -9,7 +9,7 @@
 
 using namespace en;
 
-void App::clear(const sf::Color& color)
+void App::clear(const sf::Color& color) const
 {
     this->_window->clear(color);
 }
