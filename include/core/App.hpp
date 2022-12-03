@@ -31,25 +31,25 @@ public:
 
     DrawableController &getDrawableController(void)
     {
-        return _drawableController;
+        return this->_drawableController;
     }
     UpdatableController &getUpdatableController(void)
     {
-        return _updatableController;
+        return this->_updatableController;
     }
-    Window *getWindow(void) { return _window.get(); }
+    Window *getWindow(void) { return this->_window.get(); }
 
     using Updatable::rewind;
 
-    void clearDrawable(void) { _drawableController.clear(); }
-    void clearUpdatable(void) { _updatableController.clear(); }
+    void clearDrawable(void) { this->_drawableController.clear(); }
+    void clearUpdatable(void) { this->_updatableController.clear(); }
     /**
      * @brief clears every controller
      */
     void reset(void);
 
-    void addDrawable(const Drawable *d) { _drawableController.add(d); }
-    void addUpdatable(Updatable *u) { _updatableController.add(u); }
+    void addDrawable(const Drawable *d) { this->_drawableController.add(d); }
+    void addUpdatable(Updatable *u) { this->_updatableController.add(u); }
     void onUpdate(const sf::Time& dt) override;
 
     /**

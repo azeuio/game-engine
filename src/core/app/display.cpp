@@ -11,5 +11,5 @@ using namespace en;
 
 void App::display(void)
 {
-    _window->display();
+    this->_window->display();
 }

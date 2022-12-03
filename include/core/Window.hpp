@@ -30,15 +30,15 @@ public:
         sf::Vector2u size = sf::Vector2u(0, 0)
     );
 
-    sf::RenderWindow &getSFWindow(void) { return _window; }
-    bool isOpen(void) const { return _window.isOpen(); }
+    sf::RenderWindow &getSFWindow(void) { return this->_window; }
+    bool isOpen(void) const { return this->_window.isOpen(); }
     void setTitle(const std::string &title);
-    const std::string_view &getTitle(void) const { return _title; }
+    const std::string_view &getTitle(void) const { return this->_title; }
 
-    void close(void) { _window.close(); }
+    void close(void) { this->_window.close(); }
     void clear(const sf::Color &color = sf::Color::Black)
     {
-        _display.clear(color);
+        this->_display.clear(color);
     }
 
     void draw(
