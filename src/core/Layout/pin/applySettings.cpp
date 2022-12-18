@@ -78,7 +78,7 @@ void applyCut(sf::RenderTexture &texture, const sf::View &view,
         1 - (area.width / renderTargetSize.x) - areaPercentage.left;
     areaPercentage.height = (area.height / renderTargetSize.y);
     sf::Vector2u textureSize = texture.getSize();
-    sf::IntRect newCutout = {0, 0, textureSize.x, textureSize.y};
+    sf::IntRect newCutout = {0, 0, (int)textureSize.x, (int)textureSize.y};
     std::unique_ptr<sf::Sprite> sprite = measureBottomLeftCuts(
         area, viewport, areaPercentage, newCutout, texture.getSize());
 

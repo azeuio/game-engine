@@ -16,8 +16,8 @@ int demo3(void)
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
 
     window.setPosition(
-        {desktop.width / 2 - window.getSize().x / 2,
-        desktop.height / 2 - window.getSize().y / 2}
+        {(int)desktop.width / 2 - (int)window.getSize().x / 2,
+        (int)desktop.height / 2 - (int)window.getSize().y / 2}
     );
     if (demo3_scene1(window)) { return 1; }
     printf("end of demo 3\n");

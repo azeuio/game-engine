@@ -46,6 +46,8 @@ sf::FloatRect &&defaultViewport)
         defaultViewport.left = 1 - ratio.x;
         defaultViewport.top = 0;
         break;
+    default:
+        break;
     }
     return defaultViewport;
 }

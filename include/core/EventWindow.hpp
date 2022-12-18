@@ -51,7 +51,7 @@ protected:
     //  virtual void onEvent(const sf::Event &event);
 private:
     std::function<void (const sf::Event &)> _onEventFunction =
-        [](const sf::Event &e) {};
+        []([[maybe_unused]]const sf::Event &e) {};
 };
 
 } // namespace en
