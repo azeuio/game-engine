@@ -27,7 +27,7 @@ public:
 
     void setOnEvent(const std::function<void (const sf::Event &)> &function)
     {
-        this->onEventFunction = function;
+        this->_onEventFunction = function;
     }
 protected:
     /**
@@ -47,10 +47,10 @@ protected:
      * @param event @ref sf::Event from the event queue
      * @see processEvents
      */
-    void onEvent(const sf::Event &event) { this->onEventFunction(event); }
+    void onEvent(const sf::Event &event) { this->_onEventFunction(event); }
     //  virtual void onEvent(const sf::Event &event);
 private:
-    std::function<void (const sf::Event &)> onEventFunction =
+    std::function<void (const sf::Event &)> _onEventFunction =
         [](const sf::Event &e) {};
 };
 
