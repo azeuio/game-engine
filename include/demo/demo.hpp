@@ -22,7 +22,11 @@ int demo1_scene1(en::EventWindow &window);
 int demo2(void);
 int demo2_scene3(en::App& app);
 
+int demo3(void);
+int demo3_scene1(en::EventWindow &window);
+
 const std::array<demoFcnt_t, 3> DEMOS = {
     demo1,
     demo2,
+    demo3
 };
