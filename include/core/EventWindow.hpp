@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <functional>
+
 #include <SFML/Graphics.hpp>
 
 namespace en
@@ -18,6 +20,9 @@ namespace en
  */
 class EventWindow : public sf::RenderWindow {
 using sf::RenderWindow::RenderWindow;
+private:
+    std::function<void (const sf::Event &)> _onEventFunction =
+        []([[maybe_unused]]const sf::Event &e) {};
 public:
     /**
      * @brief Processes all events on the event queue by calling
@@ -49,9 +54,6 @@ protected:
      */
     void onEvent(const sf::Event &event) { this->_onEventFunction(event); }
     //  virtual void onEvent(const sf::Event &event);
-private:
-    std::function<void (const sf::Event &)> _onEventFunction =
-        []([[maybe_unused]]const sf::Event &e) {};
 };
 
 } // namespace en
