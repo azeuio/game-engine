@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <memory>
+
 #include "core/Layout.hpp"
 
 using namespace en;

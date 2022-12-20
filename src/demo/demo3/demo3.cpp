@@ -5,11 +5,12 @@
 ** demo3
 */
 
-#include "core/App.hpp"
+#include <unistd.h>
+#include <memory>
 
+#include "core/App.hpp"
 #include "demo/demo.hpp"
 
-#include <unistd.h>
 
 
 static int launchScene(std::unique_ptr<en::EventWindow> &window,
