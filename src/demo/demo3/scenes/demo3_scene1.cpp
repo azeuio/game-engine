@@ -16,31 +16,28 @@ typedef sf::Vector2f v2f;
 typedef sf::Vector2i v2i;
 
 
-int demo3_scene1(EventWindow &window)
+int demo3_scene1(EventWindow &window, const AnchorSettings &settings)
 {
     Square square1(sf::Color::Red);
     Square square2(sf::Color::Green);
     Square square3(sf::Color::Blue);
     Square square4(sf::Color::Yellow);
-    Square margin(sf::Color(255, 0, 0, 92));
-    Square cutArea(sf::Color(0, 255, 0, 127));
+    Square cutMargin(sf::Color(255, 0, 0, 92));
+    Square margin(sf::Color(0, 255, 0, 127));
     sf::RenderTexture squareTexture;
     sf::Sprite squareSprite;
     Layout layout(window);
-    AnchorSettings settings = {
-        /* margin */ {50, 50, 50, 50},
-        /* cutArea */ {50 + 25, 50 + 25, 50 + 25, 50 + 25}
-    };
     v2i windowSize = v2i(window.getSize());
-    margin.setPosition((v2f)v2i({settings.margin.left, settings.margin.top}));
+    margin.setPosition((v2f)v2i({
+        settings.margin.left, settings.margin.top}));
     margin.setSize((v2f)v2i({
         windowSize.x - settings.margin.width - settings.margin.left,
         windowSize.y - settings.margin.height - settings.margin.top}));
-    cutArea.setPosition(
-        (v2f)v2i({settings.cutArea.left, settings.cutArea.top}));
-    cutArea.setSize((v2f)v2i({
-        windowSize.x - settings.cutArea.width - settings.cutArea.left,
-        windowSize.y - settings.cutArea.height - settings.cutArea.top}));
+    cutMargin.setPosition(
+        (v2f)v2i({settings.cutMargin.left, settings.cutMargin.top}));
+    cutMargin.setSize((v2f)v2i({
+        windowSize.x - settings.cutMargin.width - settings.cutMargin.left,
+        windowSize.y - settings.cutMargin.height - settings.cutMargin.top}));
     square2.setPosition(Square::SIZE, 0);
     square3.setPosition(0, Square::SIZE);
     square4.setPosition(Square::SIZE, Square::SIZE);
@@ -49,10 +46,15 @@ int demo3_scene1(EventWindow &window)
     squareTexture.clear(sf::Color::Transparent);
     std::unique_ptr<sf::RenderTexture> pinnedTexture;
 
+    sf::View v = window.getDefaultView();
+    v.setViewport({0.6, 0.1, 0.3, 0.3});
+    window.setView(v);
+
     window.setFramerateLimit(30);
     sf::Clock clock;
     sf::Time time = clock.getElapsedTime();
     sf::Time dt = sf::Time::Zero;
+    std::unique_ptr<sf::Sprite> tmpSprite;
     float i = (float)AnchorPoint::CENTER;
     while (window.isOpen()) {
         fflush(stdout);
@@ -63,12 +65,11 @@ int demo3_scene1(EventWindow &window)
         squareTexture.draw(square3);
         squareTexture.draw(square4);
         squareTexture.display();
-        pinnedTexture = layout.pin(
-            squareTexture, (AnchorPoint)(int)i, settings);
-        squareSprite.setTexture(pinnedTexture->getTexture());
+        layout.pin(
+            squareTexture, (AnchorPoint)(int)i, settings, tmpSprite);
         window.draw(margin);
-        window.draw(cutArea);
-        window.draw(squareSprite);
+        window.draw(cutMargin);
+        window.draw(*tmpSprite);
         window.display();
 
         window.processEvents();
@@ -79,6 +80,5 @@ int demo3_scene1(EventWindow &window)
             i -= (int)AnchorPoint::COUNT;
         }
     }
-    printf("out of scene 1\n");
     return 0;
 }

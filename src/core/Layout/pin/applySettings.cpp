@@ -9,86 +9,80 @@
 
 using namespace en;
 
-sf::FloatRect applyMargin(sf::FloatRect viewport, sf::Vector2f targetSize,
+void applyMargin(std::unique_ptr<sf::Sprite> &result, sf::Vector2f targetSize,
     const AnchorPoint &anchor, const sf::IntRect &margin)
 {
-    if (margin.top > 0 &&
-    (int)anchor < (int)AnchorPoint::WEST) {
-        viewport.top -= (float)margin.top / targetSize.y;
+    sf::Vector2f pos = {
+        (targetSize.x - result->getTextureRect().width) / 2,
+        (targetSize.y - result->getTextureRect().height) / 2
+    };
+
+    if ((int)anchor < (int)AnchorPoint::WEST) {
+        pos.y = std::max(0, margin.top);
     }
-    if (margin.left > 0 &&
-    ((int)anchor == (int)AnchorPoint::NORTH_WEST ||
-    (int)anchor == (int)AnchorPoint::WEST ||
-    (int)anchor == (int)AnchorPoint::SOUTH_WEST)) {
-        viewport.left += margin.left / targetSize.x;
+    if ((int)anchor % 3 == 0) {
+        pos.x = std::max(0, margin.left);
     }
-    if (margin.width > 0 &&
-    ((int)anchor == (int)AnchorPoint::NORTH_EAST ||
-    (int)anchor == (int)AnchorPoint::EAST ||
-    (int)anchor == (int)AnchorPoint::SOUTH_EAST)) {
-        viewport.left -= margin.width / targetSize.y;
+    if ((int)anchor % 3 == 2) {
+        pos.x = std::min(
+            targetSize.x - margin.width - result->getTextureRect().width,
+            targetSize.x - result->getTextureRect().width);
     }
-    if (margin.height > 0 &&
-    (int)anchor > (int)AnchorPoint::EAST) {
-        viewport.top += margin.height / targetSize.x;
+    if ((int)anchor > (int)AnchorPoint::EAST) {
+        pos.y = std::min(
+            targetSize.y - margin.height - result->getTextureRect().height,
+            targetSize.y - result->getTextureRect().height);
     }
-    return viewport;
+    result->setPosition(pos);
 }
 
-void cutTexture(sf::IntRect newCutout, sf::Sprite s,
-    sf::RenderTexture &texture)
-{
-    sf::Texture t = texture.getTexture();
-
-    t.loadFromImage(t.copyToImage(), newCutout);
-    s.setTexture(t);
-    texture.clear(sf::Color::Transparent);
-    texture.draw(s);
-    texture.display();
+static int max(int a, int b) {
+    return a > b ? a : b;
 }
 
-std::unique_ptr<sf::Sprite> measureBottomLeftCuts(const sf::IntRect &area,
-    const sf::FloatRect &viewport,
-    const sf::FloatRect &areaPercentage, sf::IntRect &newCutout,
-    const sf::Vector2u &textureSize)
+static sf::Texture *cutSprite(const sf::IntRect &nonCutArea,
+    sf::IntRect &newCutout, const sf::IntRect &rect,
+    std::unique_ptr<sf::Sprite> &result)
 {
-    std::unique_ptr<sf::Sprite> sprite(new sf::Sprite());
+    static std::unique_ptr<sf::Texture> texture;
 
-    if (area.left >= 0 && viewport.left < areaPercentage.left) {
-        newCutout.left = -(area.left - textureSize.x);
-        newCutout.width = area.left - viewport.left;
-        sprite->setPosition(newCutout.left, sprite->getPosition().y);
+    if (newCutout.left < 0) {
+        texture.reset(new sf::Texture());
+        return texture.get();
     }
-    if (area.height >= 0 &&
-    viewport.top < areaPercentage.height) {
-        newCutout.top = -(area.top - textureSize.y);
-        newCutout.height = area.top - viewport.top;
-        sprite->setPosition(sprite->getPosition().x, newCutout.top);
-    }
-    return sprite;
+    newCutout.width -= max(0, nonCutArea.left - rect.left);
+    newCutout.height -= max(0, nonCutArea.top - rect.top);
+    result->setPosition(result->getPosition() + sf::Vector2f(sf::Vector2i(
+    { rect.width - newCutout.width, rect.height - newCutout.height })));
+    newCutout.left += rect.width - newCutout.width;
+    newCutout.top += rect.height - newCutout.height;
+    newCutout.height -= max(0, rect.top + rect.height -
+        nonCutArea.top - nonCutArea.height);
+    newCutout.width -= max(0, rect.left + rect.width -
+        nonCutArea.left - nonCutArea.width);
+    texture.reset(new sf::Texture());
+    texture->loadFromImage(result->getTexture()->copyToImage(), newCutout);
+    result->setTexture(*texture, true);
+    return nullptr;
 }
 
-void applyCut(sf::RenderTexture &texture, const sf::View &view,
-    sf::Vector2f renderTargetSize, const sf::IntRect &area)
+void applyCut(std::unique_ptr<sf::Sprite> &result,
+    const sf::IntRect &area)
 {
-    sf::FloatRect viewport = view.getViewport();
-    sf::FloatRect areaPercentage = { area.left / renderTargetSize.x, 0, 0, 0 };
-    areaPercentage.top = (renderTargetSize.y - area.top) / renderTargetSize.y;
-    areaPercentage.width =
-        1 - (area.width / renderTargetSize.x) - areaPercentage.left;
-    areaPercentage.height = (area.height / renderTargetSize.y);
-    sf::Vector2u textureSize = texture.getSize();
-    sf::IntRect newCutout = {0, 0, (int)textureSize.x, (int)textureSize.y};
-    std::unique_ptr<sf::Sprite> sprite = measureBottomLeftCuts(
-        area, viewport, areaPercentage, newCutout, texture.getSize());
+    sf::IntRect resultRect = result->getTextureRect();
+    sf::IntRect newCutout = {0, 0, resultRect.width, resultRect.height};
+    static std::unique_ptr<sf::Texture> texture;
+    sf::IntRect intersection;
 
-    if (area.top >= 0 &&
-    viewport.top + viewport.height > areaPercentage.top) {
-        newCutout.height = textureSize.y - (textureSize.y - area.top);
+    resultRect.left = result->getPosition().x;
+    resultRect.top = result->getPosition().y;
+    if (!area.intersects(resultRect, intersection)) {
+        newCutout = {-1, -1, -1, -1};
+        result->setTexture(
+            *cutSprite(sf::IntRect(), newCutout, sf::IntRect(), result), true);
+        return;
     }
-    if (area.width >= 0 &&
-    viewport.left + viewport.width > areaPercentage.width) {
-        newCutout.width = textureSize.x - (textureSize.x - area.width);
-    }
-    cutTexture(newCutout, *sprite, texture);
+    resultRect.left = result->getPosition().x;
+    resultRect.top = result->getPosition().y;
+    cutSprite(area, newCutout, resultRect, result);
 }
